@@ -6,10 +6,11 @@ function App() {
 
   function validateBalance(str){
     let stack = [];
-    // let word = "";
     let map = {
       '(': ')'
     };
+
+    if (str === "") {return SetResponse("")}
 
     for (let i = 0; i < str.length; i++) {
         if (str[i] === '(' ) {
@@ -33,6 +34,7 @@ function App() {
 
   return (
     <div>
+      <h1>TECHNICAL CHALLENGE</h1>
       <input type="text" onChange={(e) => validateBalance(e.target.value)}/>
       <h1>Result:</h1>
       <h2>{response}</h2>
