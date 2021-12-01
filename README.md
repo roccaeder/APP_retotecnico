@@ -1,6 +1,7 @@
 # Technical Challenge
 
 This is a technical challenge.
+Deploy Heroku (https://validbalance.herokuapp.com/)
 
 ## Starting
 
