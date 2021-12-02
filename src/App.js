@@ -4,54 +4,41 @@ function App() {
 
   const [response, SetResponse] = useState("");
 
-  function validateBalance(str){
-    let stack = [];
-    let map = {
-      '(': ')'
-    };
-    if (str === "") {return SetResponse("")}
+    function validateBalance(str){
+      let happy = 0;
+      let sad = 0;
+      let aux = 0;
+      let stack = [];
+      let map = {
+        '(': ')'
+       };
 
-    for (let i = 0; i < str.length; i++) {
-      if (str[i] === ':') {
-        if (str[i + 1] === ':'){
-          // i++;
-        }
-        else if (str[i]+str[i+1] === ':(') {
-          i = i+1;
-          SetResponse("Balanceado")
-        }
-        else if (str[i]+str[i+1] === ':)') {
-          i = i+1;
-          stack.pop();
-          SetResponse("Balanceado")
-        }
+      for (let i = 0; i < str.length; i++) {
+          if (str[i] === '(' ) {
+              stack.push(str[i]);
+          }
+          else if ((str[i] === ')' )) {
+              let last = stack.pop();
+              if (str[i] !== map[last]) aux++;
+          }
+          else if (str[i] === ':') {
+              if (str[i]+str[i+1] === ':(') sad++;
+              else if (str[i]+str[i+1] === ':)') happy++;
+          }
       }
-      else if (str[i] === '(' ) {
-        stack.push(str[i]);
-        if(str[i]+str[i+1]+str[i+2]+str[i+3] === '(:()' ) { 
-          i = i+3;
-          SetResponse("Balanceado")
-          stack.pop();
-        }
-        else if(str[i]+str[i+1]+str[i+2]+str[i+3] === '(:))'){
-          i = i+3;
-          SetResponse("Balanceado")
-          stack.pop();
-          stack.pop();
-        }
-        else if (str[i]+str[i+1]+str[i+2] === '(:)') { 
-          i = i+2;
-          stack.pop();
-          SetResponse("Balanceado")
-        }
+      // console.log(happy, sad, aux , stack.length);
+      
+      if (stack.length === 0 && aux === 0) {
+          return SetResponse("Balanceado")
       }
-      else if (str[i] === ')' ) {
-          let last = stack.pop();
-          if (str[i] !== map[last]) {return SetResponse("Desbalanceado")};
+      else if (aux <= happy && stack.length <= sad) {
+          return SetResponse("Balanceado")
+      }
+      else {
+          return SetResponse("Desbalanceado")
       }
     }
-    return stack.length !== 0 ? SetResponse("Desbalanceado"):SetResponse("Balanceado");
-  }
+    
 
   return (
     <div>
